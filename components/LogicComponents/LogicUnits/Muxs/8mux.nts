@@ -1,0 +1,53 @@
+# 8 to 1 multiplexer
+
+.chipsets:
+input I0
+input I1
+input I2
+input I3
+input I4
+input I5
+input I6
+input I7
+input A
+input B
+input C
+output Y
+
+4mux mux_1
+4mux mux_2
+2mux mux_global
+
+.links:
+A:1 mux_1:5
+B:1 mux_1:6
+I0:1 mux_1:1
+I1:1 mux_1:2
+I2:1 mux_1:3
+I3:1 mux_1:4
+
+A:1 mux_2:5
+B:1 mux_2:6
+I4:1 mux_2:1
+I5:1 mux_2:2
+I6:1 mux_2:3
+I7:1 mux_2:4
+
+C:1 mux_global:3
+mux_1:7 mux_global:1
+mux_2:7 mux_global:2
+mux_global:4 Y:1
+
+.circuit:
+I0      1
+I1      2
+I2      3
+I3      4
+I4      5
+I5      6
+I6      7
+I7      8
+A       9
+B       10
+C       11
+Y       12

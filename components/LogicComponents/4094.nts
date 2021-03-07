@@ -1,0 +1,77 @@
+# 8-bits Shift Register (4094)
+#
+#                   out_3 -7-+   +-14- out_4
+#               out_2 -6-+   |   |   +-13- out_5
+#           out_1 -5-+   |   |   |   |   +-12- out_6
+#       out_0 -4-+   |   |   |   |   |   |   +-11- out_7
+#                |   |   |   |   |   |   |   |
+#            +---^---^---^---^---^---^---^---^---+
+#            |   |   |   |   |   |   |   |   |   |
+# enable -15->--[/]-[/]-[/]-[/]-[/]-[/]-[/]-[/]  |
+#            |   |   |   |   |   |   |   |   |   |
+#            |  +-----------------------------+  |
+#            |  |         saved value         |  |
+#            |  +-----------------------------+  |
+#            |   |   |   |   |   |   |   |   |   |
+#  strobe -1->--[/]-[/]-[/]-[/]-[/]-[/]-[/]-[/]  |
+#            |   |   |   |   |   |   |   |   |   |
+#            |  +-----------------------------+  |
+#    data -2->-->    8 bits shift register    >-->-9- out_qs
+#            |  +-^-------------------------v-+  |
+#            |    |                         |    |
+#   clock -3->----+                         +---->-10- out_qe
+#            |                                   |
+#            +-4094------------------------------+
+
+.chipsets:
+input clock
+input data
+input strobe
+input enable
+
+output out_0
+output out_1
+output out_2
+output out_3
+output out_4
+output out_5
+output out_6
+output out_7
+output out_qs
+output out_qe
+
+4094_core shift_register
+
+.links:
+clock:1   shift_register:3
+data:1    shift_register:2
+strobe:1  shift_register:1
+enable:1  shift_register:15
+
+out_0:1   shift_register:4
+out_1:1   shift_register:5
+out_2:1   shift_register:6
+out_3:1   shift_register:7
+out_4:1   shift_register:14
+out_5:1   shift_register:13
+out_6:1   shift_register:12
+out_7:1   shift_register:11
+out_qs:1  shift_register:9
+out_qe:1  shift_register:10
+
+.circuit:
+clock   3
+data    2
+strobe  1
+enable  15
+
+out_0   4
+out_1   5
+out_2   6
+out_3   7
+out_4   14
+out_5   13
+out_6   12
+out_7   11
+out_qs  9
+out_qe  10

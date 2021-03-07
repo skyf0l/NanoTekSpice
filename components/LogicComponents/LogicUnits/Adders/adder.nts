@@ -1,0 +1,40 @@
+# 1 bit adder
+
+.chipsets:
+input in_1
+input in_2
+input in_c
+
+xor gate_xor_1
+and gate_and_1
+xor gate_xor_2
+and gate_and_2
+or gate_or
+
+output sum
+output out_c
+
+.links:
+in_1:1 gate_xor_1:1
+in_2:1 gate_xor_1:2
+in_1:1 gate_and_1:1
+in_2:1 gate_and_1:2
+
+gate_xor_1:3 gate_xor_2:1
+in_c:1 gate_xor_2:2
+
+gate_xor_1:3 gate_and_2:1
+in_c:1 gate_and_2:2
+
+gate_and_2:3 gate_or:1
+gate_and_1:3 gate_or:2
+
+gate_xor_2:3 sum:1
+gate_or:3 out_c:1
+
+.circuit:
+in_1        1
+in_2        2
+in_c        3
+sum         4
+out_c       5

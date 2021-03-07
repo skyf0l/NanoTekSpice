@@ -1,0 +1,31 @@
+# 2 to 1 multiplexer
+
+.chipsets:
+input I0
+input I1
+input A
+output Y
+
+not gate_not
+and gate_and_1
+and gate_and_2
+or gate_or
+
+.links:
+I0:1 gate_and_1:1
+I1:1 gate_and_2:1
+
+A:1 gate_not:1
+gate_not:2 gate_and_1:2
+A:1 gate_and_2:2
+
+gate_and_1:3 gate_or:1
+gate_and_2:3 gate_or:2
+
+gate_or:3 Y:1
+
+.circuit:
+I0      1
+I1      2
+A       3
+Y       4

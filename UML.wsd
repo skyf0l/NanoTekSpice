@@ -1,0 +1,254 @@
+@startuml Components
+
+interface IComponent
+{
+    simulate(tick);
+    compute(pin);
+    setLink(pin, other, otherPin);
+    dump();
+
+    setValue(value);
+    getValue();
+
+    getComponentType();
+    getType();
+    getName();
+    getPin(pin);
+    getPins();
+}
+
+ComponentFactory -> IComponent
+class ComponentFactory
+{
+    unordered_map<string, ComponentConstructor> componentFactoryMap;
+
+    addComponentConstructor(type, componentConstructor);
+    unique_ptr<IComponent> createComponent(type, name);
+
+    loadFactoryComponents(string directoryPath);
+    loadFactoryComponent(string path);
+}
+
+IComponent --> Component
+abstract AComponent
+{
+    AComponent(type, name, componentType);
+
+    simulate(tick);
+    compute(pin);
+    setLink(pin, other, otherPin);
+    dump();
+
+    setValue(value);
+    getValue();
+
+    getComponentType();
+    getType();
+    getName();
+    getPin(pin);
+    getPins();
+
+    ComponentType _componentType;
+    string _type;
+    string _name;
+
+    unordered_map<int, unique_ptr<Pin>> _pins;
+    size_t _currentTick;
+}
+
+AComponent --> Circuit
+class Circuit
+{
+    Circuit();
+    Circuit(name, type);
+
+    simulate();
+    display();
+
+    simulate(tick);
+    compute(pin);
+    setLink(pin, other, otherPin);
+    dump();
+
+    addComponent(name, type);
+    getComponent(name);
+    removeComponent(name);
+    addLink(name1, pin1, name2, pin2);
+    removeLink(name1, pin1, name2, pin2);
+
+    setRawInputs(inputs);
+    setRawInput(input);
+    setInput(name, value);
+
+    isComponent();
+    getComponent();
+
+    bool _isComponent;
+    map<string, unique_ptr<nts::IComponent>> _components;
+}
+Circuit <- Parser
+class Parser
+{
+    LoadComponentsFromFile(filePath, circuit);
+}
+Circuit <- InteractiveShell
+class InteractiveShell
+{
+    InteractiveShell(filePath);
+
+    run();
+
+    unique_ptr<Circuit> _circuit;
+}
+
+AComponent --> Nand
+class Nand
+{
+    Nand(name);
+
+    simulate(tick);
+}
+
+AComponent --> Input
+AComponent --> True
+AComponent --> False
+AComponent --> Clock
+AComponent --> Output
+AComponent --> Logger
+class Input
+{
+    Input(name);
+
+    simulate(tick);
+
+    setValue(value);
+    getValue();
+}
+class Clock
+{
+    Clock(name);
+    ~Clock() override;
+
+    simulate(tick);
+
+    setValue(value);
+    getValue();
+}
+class True
+{
+    True(name);
+
+    simulate(tick);
+
+    getValue();
+}
+class False
+{
+    False(name);
+
+    simulate(tick);
+
+    getValue();
+}
+class Output
+{
+    False(name);
+
+    simulate(tick);
+
+    getValue();
+}
+class Logger
+{
+    False(name);
+
+    simulate(tick);
+
+    getValue();
+}
+
+Pin <- PinType
+enum PinType
+{
+    PIN_INPUT
+    PIN_OUTPUT
+    PIN_IO
+}
+Pin <- Link
+class Link
+{
+    component;
+    pin;
+}
+
+AComponent -> Pin
+class Pin
+{
+    Pin(PinType type);
+
+    connect(linkTo, linkToPin);
+    disconnect(linkTo, linkToPin);
+    getConnectedTo();
+
+    compute();
+    simulateOutputComponents(tick);
+
+    lock();
+    unlock();
+    isLocked();
+    
+    setState(state);
+    setPrevState(prevState);
+
+    getType();
+    getState();
+    getPrevState();
+
+    PinType _type;
+    bool _isLocked;
+
+    size_t _tick;
+    Tristate _state;
+    Tristate _prevState;
+
+    list<unique_ptr<Link>> _connectedTo;
+}
+
+class NtsException
+{
+    FactoryLoadingException
+
+    InvalidCommandException
+    InvalidInputCommandException
+    InvalidValueException
+
+    UnusedMethodException
+
+    UnknownComponentException
+    UnknownNameException
+
+    InvalidComponentNameException
+    InvalidPinException
+    InvalidLinkException
+
+    IntputException
+    OutputException
+
+    InvalidFileException
+    ParsingFileException
+    MissingSectionException
+
+    InvalidCircuitIOComponentException
+}
+
+enum Tristate
+{
+    UNDEFINED;
+    TRUE;
+    FALSE;
+
+    string tristateToString(tristate)
+    Tristate stringToTristate(str)
+}
+
+@enduml

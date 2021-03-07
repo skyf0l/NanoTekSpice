@@ -1,0 +1,166 @@
+# 12-bits Binary Counter (4040)
+#
+#      cl_clock -10-+     +-11- in_reset
+#                   |     |
+#    +------4040----v-----v--------------+
+# -8-|-ign   12-bit Binary Counter   ign-|-16-
+#    +------v-v-v-v-v-v-v-v-v-v-v-v------+
+#           | | | | | | | | | | | |
+# out_00 -9-+ | | | | | | | | | | +-1- out_11
+#   out_01 -7-+ | | | | | | | | +-15- out_10
+#     out_02 -6-+ | | | | | | +-14- out_09
+#       out_03 -5-+ | | | | +-12- out_08
+#         out_04 -3-+ | | +-13- out_07
+#           out_05 -2-+ +-4- out_06
+
+.chipsets:
+input clock
+input reset
+
+output out_00
+output out_01
+output out_02
+output out_03
+output out_04
+output out_05
+output out_06
+output out_07
+output out_08
+output out_09
+output out_10
+output out_11
+
+not not_clock
+not not_reset
+
+T_R_flipflop flipflop_0
+T_R_flipflop flipflop_1
+T_R_flipflop flipflop_2
+T_R_flipflop flipflop_3
+T_R_flipflop flipflop_4
+T_R_flipflop flipflop_5
+T_R_flipflop flipflop_6
+T_R_flipflop flipflop_7
+T_R_flipflop flipflop_8
+T_R_flipflop flipflop_9
+T_R_flipflop flipflop_10
+T_R_flipflop flipflop_11
+
+and and_2
+and and_3
+and and_4
+and and_5
+and and_6
+and and_7
+and and_8
+and and_9
+and and_10
+and and_11
+
+.links:
+
+# clock
+clock:1 not_clock:1
+# reset
+reset:1 not_reset:1
+
+# flipflops
+not_reset:2 flipflop_0:1
+not_clock:2 flipflop_0:2
+not_reset:2 flipflop_0:3
+
+flipflop_0:4 flipflop_1:1
+not_clock:2 flipflop_1:2
+not_reset:2 flipflop_1:3
+
+flipflop_0:4 and_2:1
+flipflop_1:4 and_2:2
+and_2:3 flipflop_2:1
+not_clock:2 flipflop_2:2
+not_reset:2 flipflop_2:3
+
+and_2:3 and_3:1
+flipflop_2:4 and_3:2
+and_3:3 flipflop_3:1
+not_clock:2 flipflop_3:2
+not_reset:2 flipflop_3:3
+
+and_3:3 and_4:1
+flipflop_3:4 and_4:2
+and_4:3 flipflop_4:1
+not_clock:2 flipflop_4:2
+not_reset:2 flipflop_4:3
+
+and_4:3 and_5:1
+flipflop_4:4 and_5:2
+and_5:3 flipflop_5:1
+not_clock:2 flipflop_5:2
+not_reset:2 flipflop_5:3
+
+and_5:3 and_6:1
+flipflop_5:4 and_6:2
+and_6:3 flipflop_6:1
+not_clock:2 flipflop_6:2
+not_reset:2 flipflop_6:3
+
+and_6:3 and_7:1
+flipflop_6:4 and_7:2
+and_7:3 flipflop_7:1
+not_clock:2 flipflop_7:2
+not_reset:2 flipflop_7:3
+
+and_7:3 and_8:1
+flipflop_7:4 and_8:2
+and_8:3 flipflop_8:1
+not_clock:2 flipflop_8:2
+not_reset:2 flipflop_8:3
+
+and_8:3 and_9:1
+flipflop_8:4 and_9:2
+and_9:3 flipflop_9:1
+not_clock:2 flipflop_9:2
+not_reset:2 flipflop_9:3
+
+and_9:3 and_10:1
+flipflop_9:4 and_10:2
+and_10:3 flipflop_10:1
+not_clock:2 flipflop_10:2
+not_reset:2 flipflop_10:3
+
+and_10:3 and_11:1
+flipflop_10:4 and_11:2
+and_11:3 flipflop_11:1
+not_clock:2 flipflop_11:2
+not_reset:2 flipflop_11:3
+
+# outputs
+
+flipflop_0:4 out_00:1
+flipflop_1:4 out_01:1
+flipflop_2:4 out_02:1
+flipflop_3:4 out_03:1
+flipflop_4:4 out_04:1
+flipflop_5:4 out_05:1
+flipflop_6:4 out_06:1
+flipflop_7:4 out_07:1
+flipflop_8:4 out_08:1
+flipflop_9:4 out_09:1
+flipflop_10:4 out_10:1
+flipflop_11:4 out_11:1
+
+.circuit:
+clock   10
+reset   11
+
+out_00  9
+out_01  7
+out_02  6
+out_03  5
+out_04  3
+out_05  2
+out_06  4
+out_07  13
+out_08  12
+out_09  14
+out_10  15
+out_11  1

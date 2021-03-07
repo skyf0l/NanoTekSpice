@@ -1,0 +1,118 @@
+name: Tests
+on: push
+
+jobs:
+  linux-make:
+    name: Make (Linux epitest docker)
+    runs-on: ubuntu-20.04
+    container: docker://epitechcontent/epitest-docker:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Make
+        shell: bash
+        run: (cmake .; make) |& sed 's/\x1b\[K//g' > make_output
+      
+      - name: Upload make artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux_make
+          path: ./make_output
+
+  linux-tests:
+    name: Unit tests (Linux epitest docker)
+    runs-on: ubuntu-20.04
+    container: docker://epitechcontent/epitest-docker:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Unit tests run
+        if: ${{ always() }}
+        shell: bash
+        run: (cmake .; cmake --build . --target tests_run) |& sed 's/\x1b\[K//g' > tests_run_output
+
+      - name: Coverage
+        if: ${{ always() }}
+        shell: bash
+        run: (gcovr --exclude tests/ --branch 2> /dev/null; gcovr --exclude tests/) 2> /dev/null |& sed 's/\x1b\[K//g' > coverage_output
+
+      # - name: Functional tests run
+      #   if: ${{ always() }}
+      #   shell: bash
+      #   run: make functional_tests_run |& sed 's/\x1b\[K//g' > functional_tests_run_output
+      
+      - name: Upload test and coverage artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux_tests
+          path: |
+            ./tests_run_output
+            ./coverage_output
+          # ./functional_tests_run_output
+
+  linux-bonus:
+    name: Bonus (Linux epitest docker)
+    runs-on: ubuntu-20.04
+    container: docker://epitechcontent/epitest-docker:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Make Bonus
+        shell: bash
+        run: (cmake .; cmake --build . --target nanotekspice_graphic) |& sed 's/\x1b\[K//g' > make_bonus_output
+      
+      - name: Upload make artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux_bonus
+          path: ./make_bonus_output
+
+  windows-make:
+    name: Make (windows)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Make
+        shell: bash
+        run: (cmake .; cmake --build .) |& sed 's/\x1b\[K//g' > make_output
+      
+      - name: Upload make artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows_make
+          path: ./make_output
+
+  windows-tests:
+    name: Unit tests (windows)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Unit tests run
+        if: ${{ always() }}
+        shell: bash
+        run: (cmake .; cmake --build . --target tests_run) |& sed 's/\x1b\[K//g' > tests_run_output
+
+      # - name: Functional tests run
+      #   if: ${{ always() }}
+      #   shell: bash
+      #   run: make functional_tests_run |& sed 's/\x1b\[K//g' > functional_tests_run_output
+      
+      - name: Upload test and coverage artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows_tests
+          path: |
+            ./tests_run_output
+          # ./functional_tests_run_output

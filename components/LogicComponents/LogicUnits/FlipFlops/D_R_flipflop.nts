@@ -1,0 +1,52 @@
+# D type RESET (CLEAR) flip flop
+
+.chipsets:
+input CLK
+input D
+input R
+
+nand nand1a
+3nand nand1b
+3nand nand1c
+3nand nand1d
+nand nand2a
+3nand nand2b
+
+output Q
+output Q2
+
+.links:
+
+nand1d:4 nand1a:1
+nand1b:4 nand1a:2
+
+nand1a:3 nand1b:1
+R:1 nand1b:2
+CLK:1 nand1b:3
+
+nand1b:4 nand1c:1
+CLK:1 nand1c:2
+nand1d:4 nand1c:3
+
+nand1c:4 nand1d:1
+R:1 nand1d:2
+D:1 nand1d:3
+
+
+nand1b:4 nand2a:1
+nand2b:4 nand2a:2
+
+nand2a:3 nand2b:1
+R:1 nand2b:2
+nand1c:4 nand2b:3
+
+
+nand2a:3 Q:1
+nand2b:4 Q2:1
+
+.circuit:
+D       1
+CLK     2
+R       3
+Q       4
+Q2      5

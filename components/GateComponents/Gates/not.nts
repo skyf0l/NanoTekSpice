@@ -1,0 +1,15 @@
+# NOT logic gate
+
+.chipsets:
+input in
+output out
+nand gate_nand
+
+.links:
+in:1 gate_nand:1
+in:1 gate_nand:2
+gate_nand:3 out:1
+
+.circuit:
+in      1
+out     2

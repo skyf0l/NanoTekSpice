@@ -1,0 +1,77 @@
+# Six NOT logic gates (4069)
+#
+#           +----4069----+
+# in_01  -1-|>--+    ign-|-14-
+#           |  _|_       |
+#           |  \ /   +--<|-13- in_13
+#           |   v   _|_  |
+#           |   O   \ /  |
+#           |   |    v   |
+# out_02 -2-|<--+    O   |
+#           |        |   |
+# in_03  -3-|>--+    +-->|-12- out_12
+#           |  _|_       |
+#           |  \ /   +--<|-11- in_11
+#           |   v   _|_  |
+#           |   O   \ /  |
+#           |   |    v   |
+# out_04 -4-|<--+    O   |
+#           |        |   |
+# in_05  -5-|>--+    +-->|-10- out_10
+#           |  _|_       |
+#           |  \ /   +--<|-9-  in_09
+#           |   v   _|_  |
+#           |   O   \ /  |
+#           |   |    v   |
+# out_06 -6-|<--+    O   |
+#           |        |   |
+#        -7-|-ign    +-->|-8-  out_08
+#           +------------+
+
+.chipsets:
+input in_A
+output out_A
+input in_B
+output out_B
+input in_C
+output out_C
+input in_D
+output out_D
+input in_E
+output out_E
+input in_F
+output out_F
+not gateA
+not gateB
+not gateC
+not gateD
+not gateE
+not gateF
+
+.links:
+in_A:1 gateA:1
+out_A:1 gateA:2
+in_B:1 gateB:1
+out_B:1 gateB:2
+in_C:1 gateC:1
+out_C:1 gateC:2
+in_D:1 gateD:1
+out_D:1 gateD:2
+in_E:1 gateE:1
+out_E:1 gateE:2
+in_F:1 gateF:1
+out_F:1 gateF:2
+
+.circuit:
+in_A    1
+out_A   2
+in_B    3
+out_B   4
+in_C    5
+out_C   6
+in_D    9
+out_D   8
+in_E    11
+out_E   10
+in_F    13
+out_F   12

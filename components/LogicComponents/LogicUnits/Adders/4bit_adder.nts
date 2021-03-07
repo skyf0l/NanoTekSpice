@@ -1,0 +1,61 @@
+# 4 bits adder
+
+.chipsets:
+input in_a1
+input in_a2
+input in_a3
+input in_a4
+input in_b1
+input in_b2
+input in_b3
+input in_b4
+input in_c
+
+adder adder_1
+adder adder_2
+adder adder_3
+adder adder_4
+
+output out_1
+output out_2
+output out_3
+output out_4
+output out_c
+
+.links:
+in_c:1 adder_1:3
+adder_1:5 adder_2:3
+adder_2:5 adder_3:3
+adder_3:5 adder_4:3
+adder_4:5 out_c:1
+
+in_a1:1 adder_1:1
+in_b1:1 adder_1:2
+in_a2:1 adder_2:1
+in_b2:1 adder_2:2
+in_a3:1 adder_3:1
+in_b3:1 adder_3:2
+in_a4:1 adder_4:1
+in_b4:1 adder_4:2
+
+adder_1:4 out_1:1
+adder_2:4 out_2:1
+adder_3:4 out_3:1
+adder_4:4 out_4:1
+
+.circuit:
+in_a1   1
+in_a2   2
+in_a3   3
+in_a4   4
+in_b1   5
+in_b2   6
+in_b3   7
+in_b4   8
+in_c    9
+
+out_1   10
+out_2   11
+out_3   12
+out_4   13
+out_c   14

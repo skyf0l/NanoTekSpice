@@ -1,0 +1,18 @@
+# Tristate logic gate
+
+.chipsets:
+input in
+input enable
+output out
+
+tristate_core tristate
+
+.links:
+in:1      tristate:1
+enable:1  tristate:2
+out:1     tristate:3
+
+.circuit:
+in      1
+enable  2
+out     3

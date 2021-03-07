@@ -1,0 +1,64 @@
+# 3 to 8 lines single bit decoder
+
+.chipsets:
+input A0
+input A1
+input A2
+input E
+
+output Y0
+output Y1
+output Y2
+output Y3
+output Y4
+output Y5
+output Y6
+output Y7
+
+not not_0
+and and_enable_0
+and and_enable_1
+
+2_to_4_decoder decoder_0
+2_to_4_decoder decoder_1
+
+.links:
+
+# enable
+E:1 and_enable_0:1
+E:1 and_enable_1:1
+A2:1 not_0:1
+not_0:2 and_enable_0:2
+A2:1 and_enable_1:2
+
+# decoder
+A0:1 decoder_0:1
+A0:1 decoder_1:1
+A1:1 decoder_0:2
+A1:1 decoder_1:2
+and_enable_0:3 decoder_0:3
+and_enable_1:3 decoder_1:3
+
+# output
+decoder_0:4 Y0:1
+decoder_0:5 Y1:1
+decoder_0:6 Y2:1
+decoder_0:7 Y3:1
+decoder_1:4 Y4:1
+decoder_1:5 Y5:1
+decoder_1:6 Y6:1
+decoder_1:7 Y7:1
+
+.circuit:
+A0      1
+A1      2
+A2      3
+E       4
+Y0      5
+Y1      6
+Y2      7
+Y3      8
+Y4      9
+Y5      10
+Y6      11
+Y7      12

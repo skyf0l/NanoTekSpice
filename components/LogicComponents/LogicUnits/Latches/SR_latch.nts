@@ -1,0 +1,27 @@
+# SET-RESET latch
+
+.chipsets:
+input S
+input R
+
+nand nand1
+nand nand2
+
+output Q
+output Q2
+
+.links:
+
+S:1 nand1:1
+nand2:3 nand1:2
+nand1:3 nand2:1
+R:1 nand2:2
+
+nand1:3 Q:1
+nand2:3 Q2:1
+
+.circuit:
+S       1
+R       2
+Q       3
+Q2      4

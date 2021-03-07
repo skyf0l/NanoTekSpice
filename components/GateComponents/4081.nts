@@ -1,0 +1,63 @@
+# Four AND logic gates (4081)
+#
+#           +---------4081---------+
+# in_01  -1-|>-+---\       ignored-|-14-
+#           |  | &  |-+            |
+# in_02  -2-|>-+---/  |     /---+-<|-13- in_13
+#           |         |  +-|  & |  |
+# out_03 -3-|<--------+  |  \---+-<|-12- in_12
+#           |            |         |
+# out_04 -4-|<--------+  +-------->|-11- out_11
+#           |         |            |
+# in_05  -5-|>-+---\  |  +-------->|-10- out_10
+#           |  | &  |-+  |         |
+# in_06  -6-|>-+---/     |  /---+-<|-9-  in_09
+#           |            +-|  & |  |
+#        -7-|-ignored       \---+-<|-8-  in_08
+#           +----------------------+
+
+.chipsets:
+input in_A1
+input in_A2
+output out_A
+input in_B1
+input in_B2
+output out_B
+input in_C1
+input in_C2
+output out_C
+input in_D1
+input in_D2
+output out_D
+and gateA
+and gateB
+and gateC
+and gateD
+
+.links:
+in_A1:1 gateA:1
+in_A2:1 gateA:2
+out_A:1 gateA:3
+in_B1:1 gateB:1
+in_B2:1 gateB:2
+out_B:1 gateB:3
+in_C1:1 gateC:1
+in_C2:1 gateC:2
+out_C:1 gateC:3
+in_D1:1 gateD:1
+in_D2:1 gateD:2
+out_D:1 gateD:3
+
+.circuit:
+in_A1   1
+in_A2   2
+out_A   3
+in_B1   5
+in_B2   6
+out_B   4
+in_C1   8
+in_C2   9
+out_C   10
+in_D1   12
+in_D2   13
+out_D   11

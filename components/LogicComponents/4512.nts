@@ -1,0 +1,85 @@
+# 8 Channel Data Selector (4512)
+#
+#          in_3 -4-+ +-5- in_4
+#        in_2 -3-+ | | +-6- in_5
+#      in_1 -2-+ | | | | +-7- in_6
+#    in_0 -1-+ | | | | | | +-8- in_7
+#            | | | | | | | |
+#          +-v-v-v-v-v-v-v-v-+
+#          |                 |
+# in_a -13->                 <-10- inhibit
+#          |                 |
+# in_b -12->                 |
+#          |                 |
+# in_c -11->                 <-15- enable
+#          |                 |
+#          +-4512---v--------+
+#                   |
+#                   +-14- out_data
+
+.chipsets:
+input inhibit
+input enable
+
+input in_a
+input in_b
+input in_c
+input in_0
+input in_1
+input in_2
+input in_3
+input in_4
+input in_5
+input in_6
+input in_7
+
+output out_data
+
+8mux mux
+
+not not_gate
+and and_gate
+
+not not_enable
+tristate enable_gate
+
+.links:
+
+in_0:1 mux:1 
+in_1:1 mux:2
+in_2:1 mux:3
+in_3:1 mux:4
+in_4:1 mux:5
+in_5:1 mux:6
+in_6:1 mux:7
+in_7:1 mux:8
+in_c:1 mux:9
+in_b:1 mux:10
+in_a:1 mux:11
+
+mux:12 and_gate:1
+inhibit:1 not_gate:1
+not_gate:2 and_gate:2
+and_gate:3 enable_gate:1
+
+enable:1 not_enable:1
+not_enable:2 enable_gate:2
+
+enable_gate:3   out_data:1
+
+.circuit:
+inhibit     10
+enable      15
+in_a        13
+in_b        12
+in_c        11
+in_0        1
+in_1        2
+in_2        3
+in_3        4
+in_4        5
+in_5        6
+in_6        7
+in_7        9
+
+out_data    14

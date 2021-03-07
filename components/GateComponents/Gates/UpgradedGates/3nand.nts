@@ -1,0 +1,22 @@
+# Tree input NAND logic gate
+
+.chipsets:
+input in_1
+input in_2
+input in_3
+output out
+3and gate_and
+not gate_not
+
+.links:
+in_1:1 gate_and:1
+in_2:1 gate_and:2
+in_3:1 gate_and:3
+gate_and:4 gate_not:1
+gate_not:2 out:1
+
+.circuit:
+in_1    1
+in_2    2
+in_3    3
+out     4

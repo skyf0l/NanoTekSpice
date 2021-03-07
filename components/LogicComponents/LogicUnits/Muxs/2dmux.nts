@@ -1,0 +1,28 @@
+# 1 to 2 demultiplexer
+
+.chipsets:
+input D
+input A
+output Y0
+output Y1
+
+not gate_not
+and gate_and_1
+and gate_and_2
+
+.links:
+D:1 gate_and_1:1
+D:1 gate_and_2:1
+
+A:1 gate_not:1
+gate_not:2 gate_and_1:2
+A:1 gate_and_2:2
+
+gate_and_1:3 Y0:1
+gate_and_2:3 Y1:1
+
+.circuit:
+D       1
+A       2
+Y0      3
+Y1      4

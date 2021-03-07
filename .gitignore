@@ -1,0 +1,68 @@
+# binaries
+a.out
+/nanotekspice*
+debug
+
+# log and rom
+/rom.bin
+/log.bin
+
+# cmake
+/Makefile
+/CMakeLists.txt.user
+/CMakeCache.txt
+/CMakeFiles
+/CMakeScripts
+/Testing
+/Makefile
+/cmake_install.cmake
+/install_manifest.txt
+/compile_commands.json
+/CTestTestfile.cmake
+/_deps
+
+# compil
+*.o
+*.d
+*.gch
+
+# tests
+tests_run
+unit_tests
+*.gcda
+*.gcno
+*.gcov
+
+# debug
+vgcore.*
+
+# other
+*.log
+.vs
+.vscode
+
+# Windows / VisualStudio Project
+
+# Project
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# MSVC depends
+!/MSVC_DEPS/**

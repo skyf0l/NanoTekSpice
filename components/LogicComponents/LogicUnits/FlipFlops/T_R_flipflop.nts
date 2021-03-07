@@ -1,0 +1,41 @@
+# T type RESET (CLEAR) flip flop
+
+.chipsets:
+input CLK
+input T
+input R
+
+and and_gate_1
+and and_gate_2
+not not_gate
+or or_gate
+
+D_R_flipflop flipflop
+
+output Q
+output Q2
+
+.links:
+
+T:1 and_gate_1:1
+flipflop:5 and_gate_1:2
+flipflop:4 and_gate_2:1
+T:1 not_gate:1
+not_gate:2 and_gate_2:2
+
+and_gate_1:3 or_gate:1
+and_gate_2:3 or_gate:2
+
+or_gate:3 flipflop:1
+CLK:1 flipflop:2
+R:1 flipflop:3
+
+flipflop:4 Q:1
+flipflop:5 Q2:1
+
+.circuit:
+T       1
+CLK     2
+R       3
+Q       4
+Q2      5

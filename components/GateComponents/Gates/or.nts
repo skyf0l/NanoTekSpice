@@ -1,0 +1,23 @@
+# OR logic gate
+
+.chipsets:
+input in_1
+input in_2
+output out
+not gate_not_in_1
+not gate_not_in_2
+and gate_and
+not gate_not_out
+
+.links:
+in_1:1 gate_not_in_1:1
+in_2:1 gate_not_in_2:1
+gate_not_in_1:2 gate_and:1
+gate_not_in_2:2 gate_and:2
+gate_and:3 gate_not_out:1
+gate_not_out:2 out:1
+
+.circuit:
+in_1    1
+in_2    2
+out     3

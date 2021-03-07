@@ -1,0 +1,23 @@
+# XOR logic gate
+
+.chipsets:
+input in_1
+input in_2
+output out
+nand gate_nand
+or gate_or
+and gate_and
+
+.links:
+in_1:1 gate_nand:1
+in_2:1 gate_nand:2
+in_1:1 gate_or:1
+in_2:1 gate_or:2
+gate_nand:3 gate_and:1
+gate_or:3 gate_and:2
+gate_and:3 out:1
+
+.circuit:
+in_1    1
+in_2    2
+out     3

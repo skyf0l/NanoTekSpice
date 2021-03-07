@@ -1,0 +1,150 @@
+# Johnson Decade Counter (4017)
+#
+#             +-4017----------------+
+#             |                     |
+#     CLK -14->                     |
+#             |   JOHNSON DECADE    |
+# inhibit -13->       COUNTER       |
+#             |                     |
+#   reset -15->                     >-12- out_s
+#             |                     |
+#             +-v-v-v-v-v-v-v-v-v-v-+
+#               | | | | | | | | | |
+#      out_0 -3-+ | | | | | | | | +-11- out_9
+#        out_1 -2-+ | | | | | | +-9- out_8
+#          out_2 -4-+ | | | | +-6- out_7
+#            out_3 -7-+ | | +-5- out_6
+#             out_4 -10-+ +-1- out_5
+
+.chipsets:
+input clock
+input inhibit
+input reset
+
+output out_0
+output out_1
+output out_2
+output out_3
+output out_4
+output out_5
+output out_6
+output out_7
+output out_8
+output out_9
+output out_s
+
+not not_inhibit
+and and_clock
+
+not not_reset
+
+D_R_flipflop flipflop_1
+D_R_flipflop flipflop_2
+D_R_flipflop flipflop_3
+D_R_flipflop flipflop_4
+D_R_flipflop flipflop_5
+
+or or_flipflop
+and and_flipflop
+
+and and_0
+and and_1
+and and_2
+and and_3
+and and_4
+and and_5
+and and_6
+and and_7
+and and_8
+and and_9
+
+not not_carry
+
+.links:
+# inhibit
+inhibit:1 not_inhibit:1
+not_inhibit:2 and_clock:1
+clock:1 and_clock:2
+
+# reset
+reset:1 not_reset:1
+
+# flipflops
+flipflop_5:5 flipflop_1:1
+and_clock:3 flipflop_1:2
+not_reset:2 flipflop_1:3
+
+flipflop_1:4 flipflop_2:1
+and_clock:3 flipflop_2:2
+not_reset:2 flipflop_2:3
+
+flipflop_3:4 or_flipflop:1
+flipflop_1:4 or_flipflop:2
+or_flipflop:3 and_flipflop:1
+flipflop_2:4 and_flipflop:2
+
+and_flipflop:3 flipflop_3:1
+and_clock:3 flipflop_3:2
+not_reset:2 flipflop_3:3
+
+flipflop_3:4 flipflop_4:1
+and_clock:3 flipflop_4:2
+not_reset:2 flipflop_4:3
+
+flipflop_4:4 flipflop_5:1
+and_clock:3 flipflop_5:2
+not_reset:2 flipflop_5:3
+
+# outputs
+flipflop_1:5 and_0:1
+flipflop_5:5 and_0:2
+and_0:3 out_0:1
+
+flipflop_1:4 and_1:1
+flipflop_2:5 and_1:2
+and_1:3 out_1:1
+flipflop_2:4 and_2:1
+flipflop_3:5 and_2:2
+and_2:3 out_2:1
+flipflop_3:4 and_3:1
+flipflop_4:5 and_3:2
+and_3:3 out_3:1
+flipflop_4:4 and_4:1
+flipflop_5:5 and_4:2
+and_4:3 out_4:1
+flipflop_1:4 and_5:1
+flipflop_5:4 and_5:2
+and_5:3 out_5:1
+flipflop_2:4 and_6:1
+flipflop_1:5 and_6:2
+and_6:3 out_6:1
+flipflop_3:4 and_7:1
+flipflop_2:5 and_7:2
+and_7:3 out_7:1
+flipflop_4:4 and_8:1
+flipflop_3:5 and_8:2
+and_8:3 out_8:1
+flipflop_4:5 and_9:1
+flipflop_5:4 and_9:2
+and_9:3 out_9:1
+
+# carry
+flipflop_5:4 not_carry:1
+not_carry:2 out_s:1
+
+.circuit:
+clock   14
+inhibit 13
+reset   15
+
+out_0   3
+out_1   2
+out_2   4
+out_3   7
+out_4   10
+out_5   1
+out_6   5
+out_7   6
+out_8   9
+out_9   11
+out_s   12

@@ -1,0 +1,36 @@
+# 4 to 1 multiplexer
+
+.chipsets:
+input I0
+input I1
+input I2
+input I3
+input A
+input B
+output Y
+
+2mux mux_1
+2mux mux_2
+2mux mux_global
+
+.links:
+A:1 mux_1:3
+A:1 mux_2:3
+I0:1 mux_1:1
+I1:1 mux_1:2
+I2:1 mux_2:1
+I3:1 mux_2:2
+
+B:1 mux_global:3
+mux_1:4 mux_global:1
+mux_2:4 mux_global:2
+mux_global:4 Y:1
+
+.circuit:
+I0      1
+I1      2
+I2      3
+I3      4
+A       5
+B       6
+Y       7
